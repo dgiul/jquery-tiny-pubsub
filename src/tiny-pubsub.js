@@ -6,20 +6,26 @@
  * Licensed under the MIT license.
  */
 
-(function($) {
+(function (factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery'], factory);
+  } else {
+    factory(jQuery);
+  }
+}(function ($) {
 
   var o = $({});
 
-  $.subscribe = function() {
+  $.sub = function() {
     o.on.apply(o, arguments);
   };
 
-  $.unsubscribe = function() {
+  $.unsub = function() {
     o.off.apply(o, arguments);
   };
 
-  $.publish = function() {
+  $.pub = function() {
     o.trigger.apply(o, arguments);
   };
 
-}(jQuery));
+}));
