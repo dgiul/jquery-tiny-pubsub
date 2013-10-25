@@ -25,29 +25,29 @@ function createLogger(name) {
 }
 
 // Subscribe to the "foo" topic (bind to the "foo" event, no namespace).
-$.subscribe('foo', createLogger('foo'));
+$.sub('foo', createLogger('foo'));
 // Subscribe to the "foo.bar" topic (bind to the "foo" event, "bar" namespace).
-$.subscribe('foo.bar', createLogger('foo.bar'));
+$.sub('foo.bar', createLogger('foo.bar'));
 // Subscribe to the "foo.baz" topic (bind to the "foo" event, "baz" namespace).
-$.subscribe('foo.baz', createLogger('foo.baz'));
+$.sub('foo.baz', createLogger('foo.baz'));
 
 // Publish arbitrary values.
-$.publish('foo', [1, 2]);
+$.pub('foo', [1, 2]);
 // logs:
 // foo 1 2
 // foo.bar 1 2
 // foo.baz 1 2
 
-$.publish('foo.bar', [3, 4]);
+$.pub('foo.bar', [3, 4]);
 // logs:
 // foo.bar 3 4
 
-$.publish('foo.baz', [5, 6]);
+$.pub('foo.baz', [5, 6]);
 // logs:
 // foo.baz 5 6
 
-$.unsubscribe('foo.bar');
-$.publish('foo', [7, 8]);
+$.unsub('foo.bar');
+$.pub('foo', [7, 8]);
 // logs:
 // foo 7 8
 // foo.baz 7 8
@@ -61,7 +61,7 @@ _Another Note: [Previous versions](https://gist.github.com/661855/2c518edd29b744
 
 I frequently see comments about how jQuery's events system has unnecessary overhead that precludes it from being used as the core of a Pub/Sub implementation. The jQuery events system is tried-and-true, having been architected to be both fast and robust, and the vast majority of users of this plugin should never encounter any kind of performance issues.
 
-Because this plugin's `$.subscribe`, `$.unsubscribe` and `$.publish` methods all use the jQuery [.on()](http://api.jquery.com/on/), [.off()](http://api.jquery.com/off/) and [.trigger()](http://api.jquery.com/trigger/) methods internally, those methods' complete signatures are available to you.
+Because this plugin's `$.sub`, `$.unsub` and `$.pub` methods all use the jQuery [.on()](http://api.jquery.com/on/), [.off()](http://api.jquery.com/off/) and [.trigger()](http://api.jquery.com/trigger/) methods internally, those methods' complete signatures are available to you.
 
 You can use [namespaces](http://docs.jquery.com/Namespaced_Events) for more control over unsubscribing and publishing.
 
@@ -75,6 +75,3 @@ Just use this handy terminology guide (jQuery events term → Pub/Sub term), and
 In addition, should you need it, these methods are fully compatible with the [jQuery.proxy()](http://api.jquery.com/jQuery.proxy/) method, in case you not only want more control over to which context the subscribed callback is bound, but want to be able to very easily unsubscribe via callback reference.
 
 Regarding performance: If at some point, your application starts processing so many messages that performance issues start to develop, you could always write a replacement "jQuery Not-So-Tiny Pub/Sub" plugin with the same API and just drop it in as a replacement to this plugin. But keep in mind that you'll also need to add in the aforementioned features, too.
-
-## Release History
-2013-01-29 - v0.7.0 - First official release.
