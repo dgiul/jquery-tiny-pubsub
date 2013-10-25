@@ -32,11 +32,11 @@
   });
 
   test('order', function() {
-    $.subscribe('order', this.createHandler('order1'));
-    $.subscribe('order', this.createHandler('order2'));
-    $.subscribe('order.xyz', this.createHandler('order3'));
-    $.subscribe('order.abc', this.createHandler('order4'));
-    $.publish('order');
+    $.sub('order', this.createHandler('order1'));
+    $.sub('order', this.createHandler('order2'));
+    $.sub('order.xyz', this.createHandler('order3'));
+    $.sub('order.abc', this.createHandler('order4'));
+    $.pub('order');
     deepEqual(this.result, [
       ['order1'],
       ['order2'],
@@ -46,10 +46,10 @@
   });
 
   test('arguments', function() {
-    $.subscribe('arguments', this.createHandler('arguments1'));
-    $.subscribe('arguments.xyz', this.createHandler('arguments2'));
-    $.subscribe('arguments.abc', this.createHandler('arguments3'));
-    $.publish('arguments', [null, 'test 1 2 3', undefined, 9]);
+    $.sub('arguments', this.createHandler('arguments1'));
+    $.sub('arguments.xyz', this.createHandler('arguments2'));
+    $.sub('arguments.abc', this.createHandler('arguments3'));
+    $.pub('arguments', [null, 'test 1 2 3', undefined, 9]);
     deepEqual(this.result, [
       ['arguments1', null, 'test 1 2 3', undefined, 9],
       ['arguments2', null, 'test 1 2 3', undefined, 9],
@@ -58,21 +58,21 @@
   });
 
   test('namespaces', function() {
-    $.subscribe('namespaces', this.createHandler('namespaces1'));
-    $.subscribe('namespaces.xyz', this.createHandler('namespaces2'));
-    $.subscribe('namespaces.abc', this.createHandler('namespaces3'));
-    $.publish('namespaces.xyz', [8, 9]);
+    $.sub('namespaces', this.createHandler('namespaces1'));
+    $.sub('namespaces.xyz', this.createHandler('namespaces2'));
+    $.sub('namespaces.abc', this.createHandler('namespaces3'));
+    $.pub('namespaces.xyz', [8, 9]);
     deepEqual(this.result, [
       ['namespaces2', 8, 9]
     ], 'publishing should support jquery event namespaces.');
   });
 
   test('unsubscribe', function() {
-    $.subscribe('unsubscribe', this.createHandler('unsubscribe1'));
-    $.subscribe('unsubscribe.xyz', this.createHandler('unsubscribe2'));
-    $.subscribe('unsubscribe.abc', this.createHandler('unsubscribe3'));
-    $.unsubscribe('unsubscribe.xyz');
-    $.publish('unsubscribe', [8, 9]);
+    $.sub('unsubscribe', this.createHandler('unsubscribe1'));
+    $.sub('unsubscribe.xyz', this.createHandler('unsubscribe2'));
+    $.sub('unsubscribe.abc', this.createHandler('unsubscribe3'));
+    $.unsub('unsubscribe.xyz');
+    $.pub('unsubscribe', [8, 9]);
     deepEqual(this.result, [
       ['unsubscribe1', 8, 9],
       ['unsubscribe3', 8, 9]
