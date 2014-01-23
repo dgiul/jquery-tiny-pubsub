@@ -1,20 +1,26 @@
-/*! Tiny Pub/Sub - v0.7.0 - 2013-01-29
+/*! Tiny Pub/Sub - v0.7.0 - 2014-01-23
 * https://github.com/cowboy/jquery-tiny-pubsub
-* Copyright (c) 2013 "Cowboy" Ben Alman; Licensed MIT */
-(function($) {
+* Copyright (c) 2014 "Cowboy" Ben Alman; Licensed MIT */
+(function (factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery'], factory);
+  } else {
+    factory(jQuery);
+  }
+}(function ($) {
 
   var o = $({});
 
-  $.subscribe = function() {
+  $.sub = function() {
     o.on.apply(o, arguments);
   };
 
-  $.unsubscribe = function() {
+  $.unsub = function() {
     o.off.apply(o, arguments);
   };
 
-  $.publish = function() {
+  $.pub = function() {
     o.trigger.apply(o, arguments);
   };
 
-}(jQuery));
+}));
